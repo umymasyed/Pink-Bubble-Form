@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transparent Pink BubbleLand Form - Join the Bubble Adventure!</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to bottom, #fce4ec, #f8bbd0);
+            color: #ad1457;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .container {
+            background-color: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 8px 32px rgba(173, 20, 87, 0.2);
+            max-width: 500px;
+            width: 100%;
+            position: relative;
+            z-index: 1;
+        }
+
+        h1 {
+            text-align: center;
+            color: #c2185b;
+            margin-bottom: 30px;
+            font-size: 32px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #c2185b;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        input, select {
+            width: 100%;
+            padding: 10px;
+            background-color: rgba(255, 255, 255, 0.3);
+            border: 2px solid rgba(244, 143, 177, 0.5);
+            border-radius: 5px;
+            font-size: 16px;
+            transition: border-color 0.3s ease, background-color 0.3s ease;
+            color: #ad1457;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: rgba(236, 64, 122, 0.8);
+            background-color: rgba(255, 255, 255, 0.5);
+        }
+
+        input::placeholder {
+            color: rgba(173, 20, 87, 0.6);
+        }
+
+        button {
+            background-color: rgba(236, 64, 122, 0.8);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 5px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+        }
+
+        button:hover {
+            background-color: rgba(216, 27, 96, 0.9);
+        }
+
+        .error {
+            color: #c2185b;
+            font-size: 14px;
+            margin-top: 5px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        .bubble {
+            position: fixed;
+            background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.8), rgba(255, 192, 203, 0.4));
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 0;
+            box-shadow: 0 0 10px rgba(255, 192, 203, 0.5);
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+            }
+            25% {
+                transform: translateY(-20px) rotate(5deg);
+            }
+            50% {
+                transform: translateY(-40px) rotate(0deg);
+            }
+            75% {
+                transform: translateY(-20px) rotate(-5deg);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Join the Pink Bubble Adventure!</h1>
+        <form id="bubbleForm">
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" id="name" name="name" required placeholder="Enter your name">
+                <div class="error" id="nameError"></div>
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required placeholder="Enter your email">
+                <div class="error" id="emailError"></div>
+            </div>
+            <div class="form-group">
+                <label for="age">Age</label>
+                <input type="number" id="age" name="age" min="1" max="120" required placeholder="Enter your age">
+                <div class="error" id="ageError"></div>
+            </div>
+            <div class="form-group">
+                <label for="favoriteColor">Favorite Bubble Shade</label>
+                <select id="favoriteColor" name="favoriteColor" required>
+                    <option value="">Choose a shade</option>
+                    <option value="lightPink">Light Pink</option>
+                    <option value="hotPink">Hot Pink</option>
+                    <option value="deepPink">Deep Pink</option>
+                    <option value="pastelPink">Pastel Pink</option>
+                    <option value="magenta">Magenta</option>
+                </select>
+                <div class="error" id="colorError"></div>
+            </div>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+
+    <script>
+        // Create amazing floating bubbles
+        function createBubbles() {
+            const bubbleCount = 50;
+            const body = document.body;
+
+            for (let i = 0; i < bubbleCount; i++) {
+                const bubble = document.createElement('div');
+                bubble.classList.add('bubble');
+
+                const size = Math.random() * 100 + 20;
+                const startX = Math.random() * window.innerWidth;
+                const startY = Math.random() * window.innerHeight;
+                const animationDuration = Math.random() * 20 + 10;
+
+                bubble.style.width = `${size}px`;
+                bubble.style.height = `${size}px`;
+                bubble.style.left = `${startX}px`;
+                bubble.style.top = `${startY}px`;
+
+                body.appendChild(bubble);
+
+                bubble.animate(
+                    [
+                        { transform: `translate(0, 0) scale(0.5)`, opacity: 0 },
+                        { transform: `translate(${Math.random() * 200 - 100}px, ${-window.innerHeight}px) scale(1)`, opacity: 1, offset: 0.8 },
+                        { transform: `translate(${Math.random() * 200 - 100}px, ${-window.innerHeight * 1.2}px) scale(0.5)`, opacity: 0 }
+                    ],
+                    {
+                        duration: animationDuration * 1000,
+                        iterations: Infinity,
+                        delay: Math.random() * -20000,
+                        easing: 'ease-in-out'
+                    }
+                );
+            }
+        }
+
+        // Form validation
+        const form = document.getElementById('bubbleForm');
+        const nameInput = document.getElementById('name');
+        const emailInput = document.getElementById('email');
+        const ageInput = document.getElementById('age');
+        const colorInput = document.getElementById('favoriteColor');
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            let isValid = true;
+
+            // Name validation
+            if (nameInput.value.trim() === '') {
+                document.getElementById('nameError').textContent = 'Name is required';
+                isValid = false;
+            } else {
+                document.getElementById('nameError').textContent = '';
+            }
+
+            // Email validation
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(emailInput.value)) {
+                document.getElementById('emailError').textContent = 'Please enter a valid email address';
+                isValid = false;
+            } else {
+                document.getElementById('emailError').textContent = '';
+            }
+
+            // Age validation
+            if (ageInput.value < 1 || ageInput.value > 120) {
+                document.getElementById('ageError').textContent = 'Please enter a valid age between 1 and 120';
+                isValid = false;
+            } else {
+                document.getElementById('ageError').textContent = '';
+            }
+
+            // Color validation
+            if (colorInput.value === '') {
+                document.getElementById('colorError').textContent = 'Please choose a favorite bubble shade';
+                isValid = false;
+            } else {
+                document.getElementById('colorError').textContent = '';
+            }
+
+            if (isValid) {
+                alert('Form submitted successfully! Welcome to the Pink Bubble Adventure!');
+                form.reset();
+            }
+        });
+
+        // Initialize bubbles on page load
+        window.addEventListener('load', createBubbles);
+    </script>
+</body>
+</html>
